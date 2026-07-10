@@ -1,6 +1,6 @@
 ================================================================================
-                    SENTINEL AI SECURITY PLATFORM
-              Enterprise-Grade Malware Analysis System
+                   # 🏆 MAJOR PROJECT - Sentinel AI Security Platform
+                         Enterprise-Grade Malware Analysis System
 ================================================================================
 
 Version: 1.0.0
