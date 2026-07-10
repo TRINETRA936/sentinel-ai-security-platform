@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel AI Security Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Sentinel AI</span>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-refresh" onclick="refreshDashboard()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <div class="status-indicator">
+                        <span class="status-dot"></span>
+                        <span>Live</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-icon files-icon">
+                    <i class="fas fa-file"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-number" id="filesScanned">0</h3>
+                    <p class="stat-label">Files Scanned</p>
+                    <div class="stat-trend positive">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>12%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon threats-icon">
+                    <i class="fas fa-bug"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-number" id="threatsDetected">0</h3>
+                    <p class="stat-label">Threats Detected</p>
+                    <div class="stat-trend negative">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon high-risk-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-number" id="highRisk">0</h3>
+                    <p class="stat-label">High Risk</p>
+                    <div class="stat-trend negative">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>5%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon critical-risk-icon">
+                    <i class="fas fa-skull"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 class="stat-number" id="criticalRisk">0</h3>
+                    <p class="stat-label">Critical Risk</p>
+                    <div class="stat-trend negative">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>3%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Recent Analysis -->
+            <div class="section recent-analysis">
+                <div class="section-header">
+                    <h2><i class="fas fa-clock"></i> Recent Analysis</h2>
+                    <button class="btn-view-all">View All</button>
+                </div>
+                <div class="analysis-list" id="analysisList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading analysis...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="right-sidebar">
+                <!-- Upload Section -->
+                <div class="section upload-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-upload"></i> Upload New File</h2>
+                    </div>
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & drop or click to upload</p>
+                        <p class="upload-hint">Supported: EXE, DLL, PDF, ZIP, APK</p>
+                        <input type="file" id="fileInput" hidden>
+                        <button class="btn-upload" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-upload"></i> Choose File
+                        </button>
+                        <div id="uploadProgress" class="upload-progress" style="display:none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span id="progressText">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Reports -->
+                <div class="section reports-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-file-pdf"></i> Recent Reports</h2>
+                    </div>
+                    <div class="reports-list" id="reportsList">
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Threat Timeline -->
+        <div class="section timeline-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-line"></i> Threat Activity Timeline</h2>
+            </div>
+            <div class="timeline-chart" id="timelineChart">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Threat Distribution -->
+        <div class="section distribution-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-pie"></i> Threat Distribution</h2>
+            </div>
+            <div class="distribution-chart" id="distributionChart">
+                <!-- Will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for scan details -->
+    <div class="modal" id="scanModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Scan Details</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
