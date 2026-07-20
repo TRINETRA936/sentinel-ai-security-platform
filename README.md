@@ -621,24 +621,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-================================================================================
-15. CONTACT & SUPPORT
-================================================================================
-
-SUPPORT CHANNELS:
-----------------
-
-- Documentation: https://github.com/yourusername/sentinel-ai-platform/wiki
-- Issues: https://github.com/yourusername/sentinel-ai-platform/issues
-- Email: support@sentinel-ai.com
-- Website: https://sentinel-ai.com
-
-COMMUNITY:
-----------
-
-- Discord: https://discord.gg/sentinel-ai
-- Twitter: https://twitter.com/sentinel_ai
-- LinkedIn: https://linkedin.com/company/sentinel-ai
 
 TROUBLESHOOTING HELP:
 --------------------
